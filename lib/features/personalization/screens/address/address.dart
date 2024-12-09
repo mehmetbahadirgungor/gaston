@@ -10,7 +10,7 @@ import '../../controllers/address_controller.dart';
 import 'add_new_address.dart';
 
 class UserAddressScreen extends StatelessWidget {
-  const UserAddressScreen({Key? key}) : super(key: key);
+  const UserAddressScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

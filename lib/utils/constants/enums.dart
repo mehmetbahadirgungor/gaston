@@ -6,6 +6,8 @@
 
 
 /// Switch of Custom Brand-Text-Size Widget
+library;
+
 
 enum ProductType { single, variable }
 

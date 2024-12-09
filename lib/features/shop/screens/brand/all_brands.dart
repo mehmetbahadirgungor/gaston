@@ -10,7 +10,7 @@ import '../../controllers/brand_controller.dart';
 import 'brand_products.dart';
 
 class AllBrandsScreen extends StatelessWidget {
-  const AllBrandsScreen({Key? key}) : super(key: key);
+  const AllBrandsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

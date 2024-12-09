@@ -5,8 +5,8 @@ import '../../../controllers/onboarding/onboarding_controller.dart';
 
 class OnBoardingSkip extends StatelessWidget {
   const OnBoardingSkip({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

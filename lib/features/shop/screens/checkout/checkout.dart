@@ -16,7 +16,7 @@ import '../../controllers/product/order_controller.dart';
 import '../cart/widgets/cart_items.dart';
 
 class CheckoutScreen extends StatelessWidget {
-  const CheckoutScreen({Key? key}) : super(key: key);
+  const CheckoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

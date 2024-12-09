@@ -8,7 +8,7 @@ import '../../../../utils/validators/validation.dart';
 import '../../controllers/address_controller.dart';
 
 class AddNewAddressScreen extends StatelessWidget {
-  const AddNewAddressScreen({Key? key}) : super(key: key);
+  const AddNewAddressScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

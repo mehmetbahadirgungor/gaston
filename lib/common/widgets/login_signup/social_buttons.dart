@@ -6,7 +6,7 @@ import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 
 class TSocialButtons extends StatelessWidget {
-  const TSocialButtons({Key? key}) : super(key: key);
+  const TSocialButtons({super.key});
 
 
   @override

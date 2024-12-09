@@ -11,9 +11,9 @@ import '../../../models/category_model.dart';
 
 class CategoryBrands extends StatelessWidget {
   const CategoryBrands({
-    Key? key,
+    super.key,
     required this.category,
-  }) : super(key: key);
+  });
 
   final CategoryModel category;
 
