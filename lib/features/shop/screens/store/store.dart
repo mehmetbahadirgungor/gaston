@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../../Common/Widgets/Appbar/appbar.dart';
 import '../../../../common/widgets/brands/brand_card.dart';
 import '../../../../common/widgets/appbar/tabbar.dart';
-import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
+import '../../../../common/widgets/custom_shapes/containers/budget_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
 import '../../../../common/widgets/shimmers/brands_shimmer.dart';
@@ -50,7 +50,7 @@ class StoreScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
                       const SizedBox(height: TSizes.spaceBtwItems),
-                      const TSearchContainer(text: 'Search in Store', showBorder: true, showBackground: false, padding: EdgeInsets.zero),
+                      const TBudgetContainer(text: 'Search in Store', showBorder: true, showBackground: false, padding: EdgeInsets.zero),
                       const SizedBox(height: TSizes.spaceBtwSections),
                       TSectionHeading(title: 'Featured Brands', onPressed: () => Get.to(const AllBrandsScreen())),
                       const SizedBox(height: TSizes.spaceBtwItems / 1.5),

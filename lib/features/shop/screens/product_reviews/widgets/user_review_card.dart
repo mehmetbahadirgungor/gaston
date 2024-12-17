@@ -41,13 +41,13 @@ class UserReviewCard extends StatelessWidget {
         ),
         const SizedBox(width: TSizes.spaceBtwItems),
         const ReadMoreText(
-          'It was first time for me to buy a car on app like this. '
+          'It was first time for me to buy a fuel on app like this. '
               ' As someone who is not experienced using this kind of app before,'
               ' I was worried at first but later everything went smoothly.'
               ' Whole processes was really clear also they helped me to deal with parts I do not get.'
-              ' After purchasing car, it arrived within 2 day and it was pretty clean.'
+              ' After purchasing fuel, it arrived within 10 minutes and it was high quality.'
               ' Definitely will recommend to my friends.'
-              ' I am really glad for buying my car from this app',
+              ' I am really glad for choosing this app',
           trimLines: 2,
           trimMode: TrimMode.Line,
           trimExpandedText: ' show less',

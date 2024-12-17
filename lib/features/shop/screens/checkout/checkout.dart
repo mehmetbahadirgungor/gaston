@@ -23,7 +23,7 @@ class CheckoutScreen extends StatelessWidget {
     final cartController = CartController.instance;
     final subTotal = cartController.totalCartPrice.value;
     final orderController = Get.put(OrderController());
-    final totalAmount = TPricingCalculator.calculateTotalPrice(subTotal, 'US');
+    final totalAmount = TPricingCalculator.calculateTotalPrice(subTotal, 'TR');
 
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
@@ -79,7 +79,7 @@ class CheckoutScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: subTotal > 0
               ? () => orderController.processOrder(totalAmount)
-              : () => TLoaders.warningSnackBar(title: 'Empty Cart', message: 'Add cars in the cart in order to proceed.'),
+              : () => TLoaders.warningSnackBar(title: 'Empty Cart', message: 'Add fuel in the cart in order to proceed.'),
           child: Text('Checkout \$$totalAmount'),
         ),
       ),

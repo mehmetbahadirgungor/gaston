@@ -10,7 +10,7 @@ import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../controllers/product/product_controller.dart';
 import '../../../models/product_model.dart';
-class TProductMetaData extends StatelessWidget {
+/*class TProductMetaData extends StatelessWidget {
   const TProductMetaData({super.key, required this.product});
 
   final ProductModel product;
@@ -68,7 +68,7 @@ class TProductMetaData extends StatelessWidget {
   }
 }
 
-/*class TProductMetaData extends StatelessWidget {
+*/class TProductMetaData extends StatelessWidget {
   const TProductMetaData({
     super.key, required this.product
   });
@@ -134,4 +134,4 @@ class TProductMetaData extends StatelessWidget {
     ],
     );
   }
-} */
+}

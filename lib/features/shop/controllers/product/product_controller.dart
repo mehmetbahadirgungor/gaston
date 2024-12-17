@@ -1,11 +1,10 @@
-
 import 'package:get/get.dart';
 
 import '../../../../data/repositories/product/product_repository.dart';
 import '../../../../utils/constants/enums.dart';
 import '../../../../utils/popups/loaders.dart';
 import '../../models/product_model.dart';
-class ProductController extends GetxController {
+/*class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
   final isLoading = false.obs;
@@ -98,7 +97,7 @@ class ProductController extends GetxController {
   }
 }
 
-/*class ProductController extends GetxController {
+*/class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
   final isLoading = false.obs;
@@ -188,4 +187,4 @@ class ProductController extends GetxController {
   String getProductStockStatus(int stock) {
     return stock > 0 ? 'In Stock' : 'Out of Stock';
   }
-} */
+}

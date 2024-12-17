@@ -42,7 +42,7 @@ class UserReviewCard3 extends StatelessWidget {
         ),
         const SizedBox(width: TSizes.spaceBtwItems),
         const ReadMoreText(
-          'Definitely worth for renting.',
+          'Definitely worth trying.',
           trimLines: 2,
           trimMode: TrimMode.Line,
           trimExpandedText: ' show less',
@@ -62,7 +62,7 @@ class UserReviewCard3 extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Cab-ren Store", style: Theme.of(context).textTheme.bodyLarge),
+                    Text("Gaston Store", style: Theme.of(context).textTheme.bodyLarge),
                     Text('17 Nov, 2023', style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:gaston/account_privacy.dart';
+import 'package:gaston/billingpaymentsection.dart';
+import 'package:gaston/language.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../coupon.dart';
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
 import '../../../../common/widgets/list_tiles/settings_menu_tile.dart';
 import '../../../../common/widgets/list_tiles/user_profile_tile.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
+import '../../../../notifications.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../authentication/screens/login/login.dart';
 import '../../../shop/screens/cart/cart.dart';
-import '../../../shop/screens/checkout/widgets/billing_payment_section.dart';
 import '../../../shop/screens/order/order.dart';
 import '../address/address.dart';
 import '../profile/profile.dart';
@@ -77,29 +81,41 @@ class SettingsScreen extends StatelessWidget {
                       title: 'Bank Account',
                       subTitle: 'Withdraw balance to registered bank account',
                       onTap: () =>
-                          Get.to(() => const TBillingPaymentSection())),
-                  const TSettingsMenuTile(
+                          Get.to(() => const BillingPaymentSectionScreen())
+                  ),
+                  TSettingsMenuTile(
                       icon: Iconsax.discount_shape,
                       title: 'My Coupons',
-                      subTitle: 'List of all the discounted coupons'),
-                  const TSettingsMenuTile(
+                      subTitle: 'List of all the discounted coupons',
+                      onTap: () =>
+                          Get.to(() => const CouponScreen())
+                     ),
+                  TSettingsMenuTile(
                       icon: Iconsax.notification,
                       title: 'Notification',
-                      subTitle: 'Set any kind of notification message'),
-                  const TSettingsMenuTile(
+                      subTitle: 'Set any kind of notification message',
+                      onTap: () =>
+                          Get.to(() => const NotificationScreen())),
+                  TSettingsMenuTile(
                       icon: Iconsax.security_card,
                       title: 'Account Privacy',
-                      subTitle: 'Manage data usage and connected accounts'),
+                      subTitle: 'Manage data usage and connected accounts',
+                      onTap: () =>
+                          Get.to(() => const AccountPrivacyScreen())
+                  ),
 
                   /// App Settings
                   const SizedBox(height: TSizes.spaceBtwSections),
                   const TSectionHeading(
                       title: 'App Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  const TSettingsMenuTile(
+                  TSettingsMenuTile(
                       icon: Iconsax.document_upload,
                       title: 'Change Language',
-                      subTitle: 'Upload Data to your Cloud Firebase'),
+                      subTitle: 'Upload Data to your Cloud Firebase',
+                      onTap: () =>
+                          Get.to(() => const LanguageScreen())
+                  ),
                   TSettingsMenuTile(
                     icon: Iconsax.location,
                     title: 'Geolocation',

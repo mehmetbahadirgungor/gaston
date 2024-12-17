@@ -15,7 +15,7 @@ import '../../texts/product_price_text.dart';
 import '../../texts/product_title_text.dart';
 import '../../texts/t_brand_title_text_with_verified_icon.dart';
 import '../favourite_icon/favourite_icon.dart';
-class TProductCardVertical extends StatelessWidget {
+/*class TProductCardVertical extends StatelessWidget {
   const TProductCardVertical({super.key, required this.product});
 
   final ProductModel product;
@@ -107,7 +107,7 @@ class TProductCardVertical extends StatelessWidget {
   }
 }
 
-/*class TProductCardVertical extends StatelessWidget {
+*/class TProductCardVertical extends StatelessWidget {
   const TProductCardVertical({super.key, required this.product});
 
   final ProductModel product;
@@ -215,7 +215,7 @@ class TProductCardVertical extends StatelessWidget {
       ),
     );
   }
-} */
+}
 
 
 

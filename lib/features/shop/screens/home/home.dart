@@ -5,7 +5,7 @@ import 'package:gaston/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:gaston/features/shop/screens/home/widgets/promo_slider.dart';
 import 'package:get/get.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
-import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
+import '../../../../common/widgets/custom_shapes/containers/budget_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../common/widgets/products/product_cards/product_card_vertical.dart';
 import '../../../../common/widgets/shimmers/vertical_product_shimmer.dart';
@@ -32,8 +32,8 @@ class HomeScreen extends StatelessWidget {
                   THomeAppBar(),
                   SizedBox(height: TSizes.spaceBtwSections),
 
-                  /// -- Searchbar
-                  TSearchContainer(text: 'Search in Store'),
+                  /// -- Budget
+                  TBudgetContainer(text: 'Current Badget: 0'),
                   SizedBox(height: TSizes.spaceBtwSections),
 
                   /// -- Heading
@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
 
                   /// Heading
                   TSectionHeading(
-                    title: 'Popular Products',
+                    title: 'Gas Products',
                     onPressed: () => Get.to(() => AllProducts(title: 'Popular Products', futureMethod: controller.fetchAllFeaturedProducts(),
                     ),
                     ),

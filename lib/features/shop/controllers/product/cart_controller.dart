@@ -29,7 +29,7 @@ class CartController extends GetxController {
       return;
     }
 
-    // Variation Selected?
+   /* // Variation Selected?
     if (product.productType == ProductType.variable.toString() &&
         variationController.selectedVariation.value.id.isEmpty) {
       TLoaders.customToast(message: 'Select Variation');
@@ -49,7 +49,7 @@ class CartController extends GetxController {
             message: 'Selected Product in out of Stock', title: 'Oh Snap');
         return;
       }
-    }
+    } */
 
     // Convert the ProductModel to a CartItemModel with the given quantity
     final selectedCartItem = convertToCartItem(product, productQuantityInCart.value);
