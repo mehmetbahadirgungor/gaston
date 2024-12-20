@@ -5,6 +5,8 @@ import '../../../utils/formatters/formatter.dart';
 
 class AddressModel {
   String id;
+  String fullAddress;
+  Map<String, dynamic> geocode;
   final String name;
   final String phoneNumber;
   final String street;
@@ -17,6 +19,8 @@ class AddressModel {
 
   AddressModel({
     required this.id,
+    required this.fullAddress,
+    required this.geocode,
     required this.name,
     required this.phoneNumber,
     required this.street,
@@ -32,6 +36,8 @@ class AddressModel {
 
   static AddressModel empty() => AddressModel(
     id: '',
+    fullAddress: '',
+    geocode: {},
     name: '',
     phoneNumber: '',
     street: '',
@@ -44,6 +50,8 @@ class AddressModel {
   Map<String, dynamic> toJson() {
     return {
       'Id': id,
+      'fullAddress' : fullAddress,
+      'geocode' : geocode,
       'Name': name,
       'PhoneNumber': phoneNumber,
       'Street': street,
@@ -59,13 +67,15 @@ class AddressModel {
   factory AddressModel.fromMap(Map<String, dynamic> data) {
     return AddressModel(
       id: data['Id'] as String,
+      fullAddress: data['fullAddress'] as String,
+      geocode: data['geocode'] as Map<String, dynamic>,
       name: data['Name'] as String,
       phoneNumber: data['PhoneNumber'] as String,
       street: data['Street'] as String,
       city: data['City'] as String,
       state: data['State'] as String,
       postalCode: data['PostalCode'] as String,
-      country: data['Country'] as String,
+      country: data['County'] as String,
       selectedAddress: data['SelectedAddress'] as bool,
       dateTime: (data['DateTime'] as Timestamp).toDate(),
     );
@@ -77,6 +87,8 @@ class AddressModel {
 
     return AddressModel(
       id: snapshot.id,
+      fullAddress: data['fullAddress'] ?? '',
+      geocode: data['geocode'] ?? {},
       name: data['Name'] ?? '',
       phoneNumber: data['PhoneNumber'] ?? '',
       street: data['Street'] ?? '',

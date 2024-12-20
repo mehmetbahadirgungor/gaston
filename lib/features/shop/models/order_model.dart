@@ -59,6 +59,8 @@ class OrderModel {
   factory OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
 
+    print("Datamız: $data");
+
     return OrderModel(
       id: data['id'] as String,
       userId: data['userId'] as String,
@@ -67,7 +69,7 @@ class OrderModel {
       orderDate: (data['orderDate'] as Timestamp).toDate(),
       paymentMethod: data['paymentMethod'] as String,
       address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
-      deliveryDate: data['DeliveryDate'] == null ? null : (data['deliveryDate'] as Timestamp).toDate(),
+      deliveryDate: data['deliveryDate'] == null ? null : (data['deliveryDate'] as Timestamp).toDate(),
       items: (data['items'] as List<dynamic>).map((itemData) => CartItemModel.fromJson(itemData as Map<String, dynamic>)).toList(),
     );
   }

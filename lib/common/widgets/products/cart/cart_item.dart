@@ -38,23 +38,6 @@ class TCartItem extends StatelessWidget {
             children: [
               TBrandTitleWithVerifiedIcon(title: cartItem.brandName ?? ''),
               Flexible(child: TProductTitleText(title: cartItem.title, maxLines: 1)),
-
-              /// Attributes
-              Text.rich(
-                TextSpan(
-                  children: (cartItem.selectedVariation ?? {})
-                      .entries
-                      .map(
-                        (e) => TextSpan(
-                      children: [
-                        TextSpan(text: ' ${e.key} ', style: Theme.of(context).textTheme.bodySmall),
-                        TextSpan(text: '${e.value} ', style: Theme.of(context).textTheme.bodyLarge),
-                      ],
-                    ),
-                  )
-                      .toList(),
-                ),
-              ),
             ],
           ),
         )

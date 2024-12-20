@@ -49,7 +49,7 @@ class TProductAttributes extends StatelessWidget {
                               /// Actual Price
                               if ( controller.selectedVariation.value.salePrice > 0)
                                 Text(
-                                  '\$${controller.getVariationPrice()}',
+                                  '\₺${controller.getVariationPrice()}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall!

@@ -97,7 +97,7 @@ import '../../../models/product_model.dart';
 
             /// Price
             if(product.productType == ProductType.single.toString() && product.salePrice > 0)
-             Text('\$${product.price}', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough)),
+             Text('\₺${product.price}', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough)),
             if(product.productType == ProductType.single.toString() && product.salePrice > 0) const SizedBox(width: TSizes.spaceBtwItems),
             TProductPriceText(price: controller.getProductPrice(product), isLarge: true),
           ],

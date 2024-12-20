@@ -55,7 +55,7 @@ class TOrderListItems extends StatelessWidget {
                       Row(
                         children: [
                           /// 1 - Image
-                          const Icon(Iconsax.ship),
+                          const Icon(Iconsax.truck),
                           const SizedBox(width: TSizes.spaceBtwItems / 2),
 
                           /// 2 - Status & Date
@@ -75,7 +75,10 @@ class TOrderListItems extends StatelessWidget {
                           ),
 
                           /// 3 - Icon
-                          IconButton(onPressed: () {}, icon: const Icon(Iconsax.arrow_right_34, size: TSizes.iconSm)),
+                          IconButton(onPressed: () {
+                            // YÖNLENDİRME OLACAK
+                            print("SelamunAleyküm");
+                          }, icon: const Icon(Iconsax.arrow_right_34, size: TSizes.iconSm)),
                         ],
                       ),
                       const SizedBox(height: TSizes.spaceBtwItems),

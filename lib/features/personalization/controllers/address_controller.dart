@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaston/geocoding_repository.dart';
 import 'package:get/get.dart';
 import '../../../common/widgets/texts/section_heading.dart';
 import '../../../data/repositories/address/address_repository.dart';
@@ -93,8 +94,10 @@ class AddressController extends GetxController {
       }
 
       // Save Address Data
-      final address = AddressModel(
+      AddressModel address = AddressModel(
         id: '',
+        fullAddress: '',
+        geocode: {},
         name: name.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
         street: street.text.trim(),
@@ -104,10 +107,15 @@ class AddressController extends GetxController {
         country: country.text.trim(),
         selectedAddress: true,
       );
-      final id = await addressRepository.addAddress(address);
+
+      // Check Geocoding
+      address.geocode = await GeocodingRepository.fetchGeocode(address.toString());
+
+      // Update FullAddress
+      address.fullAddress = address.toString();
 
       // Update Selected Address status
-      address.id = id;
+      address.id = await addressRepository.addAddress(address);
       await selectAddress(address);
 
       // Remove Loader

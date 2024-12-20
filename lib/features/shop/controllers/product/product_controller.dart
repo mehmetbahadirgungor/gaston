@@ -168,7 +168,7 @@ import '../../models/product_model.dart';
         return largestPrice.toString();
       } else {
         // otherwise return a price range
-        return '$smallestPrice - \$$largestPrice';
+        return '$smallestPrice - ₺$largestPrice';
       }
     }
 

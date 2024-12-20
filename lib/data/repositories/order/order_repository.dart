@@ -22,7 +22,8 @@ class OrderRepository extends GetxController {
       final result = await _db.collection('Users').doc(userId).collection('Orders').get();
       return result.docs.map((documentSnapshot) => OrderModel.fromSnapshot(documentSnapshot)).toList();
     } catch (e) {
-      throw 'Something went wrong while fetching Order Information. Tyr again later';
+      print(e);
+      throw 'Something went wrong while fetching Order Information. Try again later';
     }
   }
 
@@ -31,7 +32,7 @@ class OrderRepository extends GetxController {
     try {
       await _db.collection('Users').doc(userId).collection('Orders').add(order.toJson());
     } catch (e) {
-      throw 'Something went wrong while fetching Order Information. Tyr again later';
+      throw 'Something went wrong while fetching Order Information. Try again later';
     }
   }
 }

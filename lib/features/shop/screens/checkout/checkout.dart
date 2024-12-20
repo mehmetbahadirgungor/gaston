@@ -80,7 +80,7 @@ class CheckoutScreen extends StatelessWidget {
           onPressed: subTotal > 0
               ? () => orderController.processOrder(totalAmount)
               : () => TLoaders.warningSnackBar(title: 'Empty Cart', message: 'Add fuel in the cart in order to proceed.'),
-          child: Text('Checkout \$$totalAmount'),
+          child: Text('Checkout ₺$totalAmount'),
         ),
       ),
     );
