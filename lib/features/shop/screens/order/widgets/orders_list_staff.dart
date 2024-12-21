@@ -76,7 +76,7 @@ class TOrderListItems extends StatelessWidget {
 
                           /// 3 - Icon
                           IconButton(onPressed: () {
-                            // YÖNLENDİRME OLACAK
+                            // TODO: YÖNLENDİRME OLACAK
                             print("SelamunAleyküm");
                           }, icon: const Icon(Iconsax.arrow_right_34, size: TSizes.iconSm)),
                         ],

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:gaston/utils/constants/enums.dart';
 import '../../../utils/formatters/formatter.dart';
 import 'address_model.dart';
 
@@ -14,6 +14,8 @@ class UserModel {
   String phoneNumber;
   String profilePicture;
   List<AddressModel> addresses;
+  UserType userType;
+  bool isThereActiveOrder;
 
   /// Constructor for UserModel,
   UserModel({
@@ -25,6 +27,8 @@ class UserModel {
     required this.phoneNumber,
     required this.profilePicture,
     required this.addresses,
+    required this.userType,
+    required this.isThereActiveOrder,
   });
 
   /// Helper functions to get the full name.
@@ -48,7 +52,7 @@ class UserModel {
   }
 
   /// Static function to create an empty user model
-  static UserModel empty() => UserModel(id: '', firstName: '', lastName: '', username: '', email: '', phoneNumber: '', profilePicture: '', addresses: []);
+  static UserModel empty() => UserModel(id: '', firstName: '', lastName: '', username: '', email: '', phoneNumber: '', profilePicture: '', addresses: [], userType: UserType.member, isThereActiveOrder: false);
 
   /// Convert model to JSON structure staring data in Firebase.
   Map<String, dynamic> toJson() {
@@ -60,6 +64,8 @@ class UserModel {
       'PhoneNumber' : phoneNumber,
       'ProfilePicture' : profilePicture,
       'Addresses': addresses.map((address) => address.toJson()).toList(),
+      'UserType' : userType.toString(),
+      'isThereActiveOrder' : isThereActiveOrder,
     };
   }
 
@@ -76,6 +82,8 @@ class UserModel {
         phoneNumber: data['PhoneNumber'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
         addresses: (data['Addresses'] as List<dynamic>?)?.map((address) => AddressModel.fromMap(address)).toList() ?? [],
+        userType: UserType.values.firstWhere((e) => e.toString() == data['UserType']) ,
+        isThereActiveOrder: data["isThereActiveOrder"] ?? false,
       );
     }else {
       return UserModel.empty();

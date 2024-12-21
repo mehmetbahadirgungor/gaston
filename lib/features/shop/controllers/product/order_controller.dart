@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gaston/features/shop/controllers/product/cart_controller.dart';
 import 'package:gaston/features/shop/controllers/product/checkout_controller.dart';
@@ -57,13 +58,18 @@ class OrderController extends GetxController {
         // Set Date ad needed
         deliveryDate: DateTime.now(),
         items: cartController.cartItems.toList(),
+        staffId: '',
+        isActive: true,
       );
 
-      // the order
+      // Save the order
       await orderRepository.saveOrder(order, userId);
 
-      // Update the cary status
+      // Update the cart status
       cartController.clearCart();
+
+      // Update the user station //TODO: user_repository'e encapsulation yap, buraya ekle.
+      FirebaseFirestore.instance.collection("Users").doc(userId).update({'isThereActiveOrder' : true});
 
       // Show Success screen
       Get.off(() =>
@@ -77,6 +83,8 @@ class OrderController extends GetxController {
       TLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }
+
+  void completeOrder(){} //TODO: Sipariş tamamlama.
 }
 
 

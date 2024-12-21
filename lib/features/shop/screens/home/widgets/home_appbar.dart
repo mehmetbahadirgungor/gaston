@@ -35,6 +35,7 @@ class THomeAppBar extends StatelessWidget {
       actions: const [
         TCartCounterIcon(iconColor: TColors.white, counterByColor: TColors.black, counterTextColor: TColors.white),
       ],
+      showBackArrow: false,
     );
   }
 }

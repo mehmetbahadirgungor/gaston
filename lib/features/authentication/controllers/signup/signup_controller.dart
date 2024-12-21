@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:gaston/utils/constants/enums.dart';
 import 'package:get/get.dart';
 import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../data/repositories/user/user_repository.dart';
@@ -66,6 +67,8 @@ class SignupController extends GetxController {
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: '',
         addresses: [],
+        userType: UserType.member,
+        isThereActiveOrder: false,
       );
 
       final userRepository = Get.put(UserRepository());

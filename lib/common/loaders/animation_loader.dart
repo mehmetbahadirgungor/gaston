@@ -36,7 +36,7 @@ class TAnimationLoaderWidget extends StatelessWidget {
             style: Theme
                 .of(context)
                 .textTheme
-                .bodyMedium,
+                .headlineMedium,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: TSizes.defaultSpace),

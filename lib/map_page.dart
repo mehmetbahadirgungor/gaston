@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'package:gaston/features/shop/controllers/product/order_controller.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:gaston/utils/constants/api_constants.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -15,9 +15,12 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  final orderController = Get.put(OrderController());
+
   final Completer<GoogleMapController> _controller = Completer();
 
-  LatLng? destination;
+  static const LatLng destination = LatLng(41.091884, 29.094327);
+
   List<LatLng> polylineCoordinates = [];
   LocationData? currentLocation;
 
@@ -25,25 +28,29 @@ class _MapPageState extends State<MapPage> {
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
 
   late Location location;
-  final TextEditingController _addressController = TextEditingController();
 
+  // Getting the current location of the phone
   void getCurrentLocation() async {
     location = Location();
 
+    // When the location is obtained, update the map center
     location.getLocation().then((locationData) {
       setState(() {
         currentLocation = locationData;
       });
     });
 
+    // Update the map when the location changes
     location.onLocationChanged.listen((newLocation) async {
       setState(() {
         currentLocation = newLocation;
       });
+      // Update the polyline
       getPolyPoints();
     });
 
     location.getLocation().then((locationData) async {
+      // Adjust the map camera position based on the current location
       GoogleMapController googleMapController = await _controller.future;
       googleMapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -54,151 +61,78 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
+  // Drawing a polyline between the phone's current location and the destination
   void getPolyPoints() async {
-    if (currentLocation == null || destination == null) return;
+    if (currentLocation == null) return;
 
     PolylinePoints polylinePoints = PolylinePoints();
 
+    // If there is a current location, create a new route
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        googleApiKey: googleApiKey,
+        googleApiKey: googleApiKey, // Place your own API key here
         request: PolylineRequest(
             origin: PointLatLng(
                 currentLocation!.latitude!, currentLocation!.longitude!),
             destination:
-                PointLatLng(destination!.latitude, destination!.longitude),
+                PointLatLng(destination.latitude, destination.longitude),
             mode: TravelMode.driving));
 
+    // Update the polyline only with the valid points
     if (result.points.isNotEmpty) {
-      polylineCoordinates.clear();
+      polylineCoordinates.clear(); // Clear the old polyline
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
-      setState(() {});
-    }
-  }
-
-  Future<void> getCoordinatesFromAddress(String address) async {
-    final url =
-        "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=$googleApiKey";
-    try {
-      final response = await http.get(Uri.parse(url));
-      final data = json.decode(response.body);
-
-      if (data['status'] == 'OK') {
-        final location = data['results'][0]['geometry']['location'];
-        setState(() {
-          destination = LatLng(location['lat'], location['lng']);
-        });
-        getPolyPoints();
-      } else {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Error"),
-            content: Text("Unable to find location: ${data['status']}"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("OK"),
-              ),
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Error"),
-          content: Text("An error occurred: $e"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
+      setState(() {}); // Update the UI
     }
   }
 
   @override
   void initState() {
     super.initState();
-    getCurrentLocation();
+    getCurrentLocation(); // Get the location at the start
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Google Maps Destination"),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _addressController,
-                    decoration: const InputDecoration(
-                      hintText: "Enter destination address",
-                    ),
+      body: currentLocation == null
+          ? const Center(
+              child: Text("Loading..."),
+            )
+          : GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                    currentLocation!.latitude!, currentLocation!.longitude!),
+                zoom: 13,
+              ),
+              polylines: {
+                Polyline(
+                  polylineId: const PolylineId("route"),
+                  points: polylineCoordinates,
+                  color: Colors.red,
+                  width: 5,
+                ),
+              },
+              markers: {
+                Marker(
+                  markerId: const MarkerId("currentLocation"),
+                  icon: BitmapDescriptor.defaultMarker,
+                  position: LatLng(
+                    currentLocation!.latitude!,
+                    currentLocation!.longitude!,
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    getCoordinatesFromAddress(_addressController.text);
-                  },
+                const Marker(
+                  markerId: MarkerId("destination"),
+                  icon: BitmapDescriptor.defaultMarker,
+                  position: destination,
                 ),
-              ],
+              },
+              onMapCreated: (mapController) {
+                _controller.complete(mapController);
+              },
             ),
-          ),
-          Expanded(
-            child: currentLocation == null
-                ? const Center(
-                    child: Text("Loading..."),
-                  )
-                : GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                          currentLocation!.latitude!, currentLocation!.longitude!),
-                      zoom: 13,
-                    ),
-                    polylines: {
-                      Polyline(
-                        polylineId: const PolylineId("route"),
-                        points: polylineCoordinates,
-                        color: Colors.red,
-                        width: 5,
-                      ),
-                    },
-                    markers: {
-                      Marker(
-                        markerId: const MarkerId("currentLocation"),
-                        icon: BitmapDescriptor.defaultMarker,
-                        position: LatLng(
-                          currentLocation!.latitude!,
-                          currentLocation!.longitude!,
-                        ),
-                      ),
-                      if (destination != null)
-                        Marker(
-                          markerId: const MarkerId("destination"),
-                          icon: BitmapDescriptor.defaultMarker,
-                          position: destination!,
-                        ),
-                    },
-                    onMapCreated: (mapController) {
-                      _controller.complete(mapController);
-                    },
-                  ),
-          ),
-        ],
-      ),
     );
   }
 }

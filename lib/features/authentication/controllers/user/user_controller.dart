@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gaston/utils/constants/enums.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../data/repositories/authentication/authentication_repository.dart';
@@ -68,6 +69,8 @@ class UserController extends GetxController {
             phoneNumber: userCredentials.user!.phoneNumber ?? '',
             profilePicture: userCredentials.user!.photoURL ?? '',
             addresses: [],
+            userType: this.user.value.userType,
+            isThereActiveOrder: this.user.value.isThereActiveOrder,
           );
 
           // Save user data

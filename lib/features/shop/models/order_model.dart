@@ -15,6 +15,9 @@ class OrderModel {
   final AddressModel? address;
   final DateTime? deliveryDate;
   final List<CartItemModel> items;
+  final String staffId;
+  Map<String, dynamic>? staffGeocode;
+  bool isActive;
 
   OrderModel({
     required this.id,
@@ -26,6 +29,9 @@ class OrderModel {
     this.paymentMethod = 'Paypal',
     this.address,
     this.deliveryDate,
+    this.staffId = '',
+    this.staffGeocode,
+    required this.isActive,
   });
 
   String get formattedOrderDate => THelperFunctions.getFormattedDate(orderDate);
@@ -40,7 +46,11 @@ class OrderModel {
           ? 'Delivered'
           : status == OrderStatus.shipped
           ? 'Shipment on the way'
-          : 'Processing';
+          : status == OrderStatus.processing
+          ? 'Processing'
+          : status == OrderStatus.pending
+          ? 'Pending'
+          : 'Waiting for Confirming';
 
   Map<String, dynamic> toJson() {
     return {
@@ -53,13 +63,14 @@ class OrderModel {
       'address': address?.toJson(),
       'deliveryDate': deliveryDate,
       'items': items.map((item) => item.toJson()).toList(),
+      'staffId' : staffId,
+      'staffGeocode' : staffGeocode,
+      'isActive' : true,
     };
   }
 
   factory OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
-
-    print("Datamız: $data");
 
     return OrderModel(
       id: data['id'] as String,
@@ -71,6 +82,9 @@ class OrderModel {
       address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
       deliveryDate: data['deliveryDate'] == null ? null : (data['deliveryDate'] as Timestamp).toDate(),
       items: (data['items'] as List<dynamic>).map((itemData) => CartItemModel.fromJson(itemData as Map<String, dynamic>)).toList(),
+      staffId: data['staffId'] as String,
+      staffGeocode: data['staffGeocode']==null ? data['staffGeocode'] : data['staffGeocode'] as Map<String, dynamic>,
+      isActive: data['isActive'] as bool,
     );
   }
 }

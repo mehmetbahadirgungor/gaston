@@ -28,6 +28,7 @@ class FavouriteScreen extends StatelessWidget {
           TCircularIcon(
               icon: Iconsax.add, onPressed: () => Get.to(const HomeScreen())),
         ],
+        showBackArrow: false,
       ),
 
       /// Body

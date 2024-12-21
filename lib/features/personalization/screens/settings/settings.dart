@@ -38,7 +38,8 @@ class SettingsScreen extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium!
-                              .apply(color: TColors.white))),
+                              .apply(color: TColors.white)),
+                      showBackArrow: false,),
 
                   /// User Profile Card
                   TUserProfileTile(
