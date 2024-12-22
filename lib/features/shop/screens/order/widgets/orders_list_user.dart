@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gaston/features/shop/controllers/product/order_controller.dart';
 import 'package:gaston/utils/popups/dialogs.dart';
 import 'package:gaston/utils/popups/full_screen_loader.dart';
 import 'package:get/get.dart';
@@ -17,12 +18,11 @@ import '../../../../navigation_menu.dart';
 
 class TOrderStaffListItems extends StatelessWidget {
   const TOrderStaffListItems({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OrderRepository());
+    final controller = Get.put(OrderController());
     return FutureBuilder(
-        future: controller.fetchUsersOrders(),
+        future: controller.orderRepository.fetchUsersOrders(),
         builder: (_, snapshot) {
           /// Nothing Found Widget
           final emptyWidget = TAnimationLoaderWidget(
@@ -84,7 +84,8 @@ class TOrderStaffListItems extends StatelessWidget {
                                   content: 'This order will be processing.',
                                   cancelText: 'No',
                                   confirmText: 'Yes',
-                                  onConfirm: () {});
+                                  onConfirm: () => controller.chooseOrder(order),
+                                  );
                             },
                             icon: const Icon(Iconsax.arrow_right_34, size: TSizes.iconSm),
                           ),

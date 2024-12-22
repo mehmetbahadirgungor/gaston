@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:gaston/features/shop/controllers/product/order_controller.dart';
+import 'package:gaston/features/shop/models/order_model.dart';
+import 'package:gaston/geocoding_repository.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -8,18 +10,20 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  final OrderModel order;
+  const MapPage({super.key, required this.order});
 
   @override
   State<MapPage> createState() => _MapPageState();
 }
 
 class _MapPageState extends State<MapPage> {
-  final orderController = Get.put(OrderController());
+  late Timer _timer;
 
   final Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng destination = LatLng(41.091884, 29.094327);
+  static late LatLng destination;
+  static late LatLng currentLocation2;
 
   List<LatLng> polylineCoordinates = [];
   LocationData? currentLocation;
@@ -27,43 +31,28 @@ class _MapPageState extends State<MapPage> {
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
 
-  late Location location;
-
   // Getting the current location of the phone
   void getCurrentLocation() async {
-    location = Location();
-
-    // When the location is obtained, update the map center
-    location.getLocation().then((locationData) {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
       setState(() {
-        currentLocation = locationData;
+        destination = GeocodingRepository.locationToGeocode(widget.order.address!.geocode);
+        currentLocation2 = GeocodingRepository.locationToGeocode(widget.order.staffGeocode!);
+        getPolyPoints();
       });
     });
 
-    // Update the map when the location changes
-    location.onLocationChanged.listen((newLocation) async {
-      setState(() {
-        currentLocation = newLocation;
-      });
-      // Update the polyline
-      getPolyPoints();
-    });
-
-    location.getLocation().then((locationData) async {
-      // Adjust the map camera position based on the current location
-      GoogleMapController googleMapController = await _controller.future;
-      googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(
-          zoom: 13.5,
-          target: LatLng(locationData.latitude!, locationData.longitude!),
-        ),
+    // Adjust the map camera position based on the current location
+    GoogleMapController googleMapController = await _controller.future;
+    googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        zoom: 13.5,
+        target: LatLng(currentLocation2.latitude, currentLocation2.longitude),
+      ),
       ));
-    });
   }
 
   // Drawing a polyline between the phone's current location and the destination
   void getPolyPoints() async {
-    if (currentLocation == null) return;
 
     PolylinePoints polylinePoints = PolylinePoints();
 
@@ -72,7 +61,7 @@ class _MapPageState extends State<MapPage> {
         googleApiKey: googleApiKey, // Place your own API key here
         request: PolylineRequest(
             origin: PointLatLng(
-                currentLocation!.latitude!, currentLocation!.longitude!),
+                currentLocation2.latitude, currentLocation2.longitude),
             destination:
                 PointLatLng(destination.latitude, destination.longitude),
             mode: TravelMode.driving));
@@ -90,20 +79,25 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
+    currentLocation2 = GeocodingRepository.locationToGeocode(widget.order.staffGeocode!);
+    destination = GeocodingRepository.locationToGeocode(widget.order.address!.geocode);
     getCurrentLocation(); // Get the location at the start
+  }
+
+  @override
+  void dispose() {
+    // Timer'ı temizlemeyi unutmayın
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: currentLocation == null
-          ? const Center(
-              child: Text("Loading..."),
-            )
-          : GoogleMap(
+      body: GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: LatLng(
-                    currentLocation!.latitude!, currentLocation!.longitude!),
+                    currentLocation2.latitude, currentLocation2.longitude),
                 zoom: 13,
               ),
               polylines: {
@@ -119,11 +113,11 @@ class _MapPageState extends State<MapPage> {
                   markerId: const MarkerId("currentLocation"),
                   icon: BitmapDescriptor.defaultMarker,
                   position: LatLng(
-                    currentLocation!.latitude!,
-                    currentLocation!.longitude!,
+                    currentLocation2.latitude,
+                    currentLocation2.longitude,
                   ),
                 ),
-                const Marker(
+                Marker(
                   markerId: MarkerId("destination"),
                   icon: BitmapDescriptor.defaultMarker,
                   position: destination,

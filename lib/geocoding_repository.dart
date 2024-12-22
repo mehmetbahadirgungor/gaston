@@ -23,5 +23,5 @@ class GeocodingRepository {
   }
 
   static LatLng locationToGeocode (Map<String, dynamic> location) => LatLng(location['lat'], location['lng']);
-  
+  static Map<String, dynamic> geocodeToLocation (LatLng location) => {'lat' : location.latitude, 'lng' : location.longitude};
 }

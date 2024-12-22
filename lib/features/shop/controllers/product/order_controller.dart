@@ -51,14 +51,13 @@ class OrderController extends GetxController {
         id: UniqueKey().toString(),
         userId: userId,
         status: OrderStatus.pending,
+        items: cartController.cartItems.toList(),
         totalAmount: totalAmount,
         orderDate: DateTime.now(),
         paymentMethod: checkoutController.selectedPaymentMethod.value.name,
         address: addressController.selectedAddress.value,
-        // Set Date ad needed
-        deliveryDate: DateTime.now(),
-        items: cartController.cartItems.toList(),
         staffId: '',
+        staffGeocode: null,
         isActive: true,
       );
 
@@ -76,7 +75,7 @@ class OrderController extends GetxController {
           SuccessScreen(
             image: TImages.orderCompletedAnimation,
             title: 'Payment Success!',
-            subTitle: 'Your car will be shipped soon!',
+            subTitle: 'Your fuel will be processed soon!',
             onPressed: () => Get.offAll(() => const NavigationMenu()),
           ));
     } catch (e) {
@@ -84,7 +83,133 @@ class OrderController extends GetxController {
     }
   }
 
-  void completeOrder(){} //TODO: Sipariş tamamlama.
+  void chooseOrder(OrderModel order) async {
+    // Start Loader
+      TFullScreenLoader.openLoadingDialog(
+          'Processing your order', TImages.pencilAnimation);
+    
+    // Get user authentication ID
+      final userId = AuthenticationRepository.instance.authUser.uid;
+      if (userId.isEmpty) return;
+
+    // Add Details
+      final updatedOrder = OrderModel(
+        id: order.id,
+        userId: order.userId,
+        status: OrderStatus.processing,
+        totalAmount: order.totalAmount,
+        orderDate: order.orderDate,
+        paymentMethod: order.paymentMethod,
+        deliveryDate: order.deliveryDate,
+        address: order.address,
+        items: order.items,
+        staffId: userId,
+        staffGeocode: order.staffGeocode,
+        isActive: order.isActive,
+      );
+
+    // Update the order
+      await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
+
+    // Update the user station //TODO: user_repository'e encapsulation yap, buraya ekle.
+      FirebaseFirestore.instance.collection("Users").doc(userId).update({'isThereActiveOrder' : true});
+    
+    // Show Success screen
+      Get.off(() =>
+          SuccessScreen(
+            image: TImages.orderCompletedAnimation,
+            title: 'Choosing Success!',
+            subTitle: 'The order is processed!',
+            onPressed: () => Get.offAll(() => const NavigationMenu()),
+          ));
+  }
+  
+  void shippingOrder(OrderModel order) async {
+    // Add Details
+      final updatedOrder = OrderModel(
+        id: order.id,
+        userId: order.userId,
+        status: OrderStatus.shipped,
+        items: order.items,
+        totalAmount: order.totalAmount,
+        orderDate: order.orderDate,
+        paymentMethod: order.paymentMethod,
+        address: order.address,
+        deliveryDate: null,
+        staffId: order.staffId,
+        staffGeocode: order.staffGeocode,
+        isActive: order.isActive,
+      );
+
+    // Update the order
+      await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
+  }
+
+  void updateStaffLocation(OrderModel order) async {
+    // Add Details
+      final updatedOrder = OrderModel(
+        id: order.id,
+        userId: order.userId,
+        status: order.status,
+        items: order.items,
+        totalAmount: order.totalAmount,
+        orderDate: order.orderDate,
+        paymentMethod: order.paymentMethod,
+        address: order.address,
+        deliveryDate: null,
+        staffId: order.staffId,
+        staffGeocode: order.staffGeocode,
+        isActive: order.isActive,
+      );
+
+    // Update the order
+      await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
+  }
+
+  void confirmOrder(OrderModel order) async {
+    // Add Details
+      final updatedOrder = OrderModel(
+        id: order.id,
+        userId: order.userId,
+        status: OrderStatus.confirming,
+        items: order.items,
+        totalAmount: order.totalAmount,
+        orderDate: order.orderDate,
+        paymentMethod: order.paymentMethod,
+        address: order.address,
+        deliveryDate: null,
+        staffId: order.staffId,
+        staffGeocode: order.staffGeocode,
+        isActive: order.isActive,
+      );
+
+    // Update the order
+      await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
+  }
+
+  void completeOrder(OrderModel order) async { //TODO: Sipariş tamamlama.
+    // Add Details
+      final updatedOrder = OrderModel(
+        id: order.id,
+        userId: order.userId,
+        status: OrderStatus.delivered,
+        totalAmount: order.totalAmount,
+        orderDate: order.orderDate,
+        paymentMethod: order.paymentMethod,
+        address: order.address,
+        deliveryDate: DateTime.now(),
+        items: order.items,
+        staffId: order.staffId,
+        isActive: false,
+      );
+
+    // Update the user and staff station //TODO: user_repository'e encapsulation yap, buraya ekle.
+      FirebaseFirestore.instance.collection("Users").doc(updatedOrder.userId).update({'isThereActiveOrder' : false});
+      FirebaseFirestore.instance.collection("Users").doc(updatedOrder.staffId).update({'isThereActiveOrder' : false});
+
+    // Update the order
+      await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
+  } 
 }
 
 

@@ -23,7 +23,11 @@ class OrderMemberScreen extends StatelessWidget {
         padding: const EdgeInsets.all(TSizes.defaultSpace),
 
         /// -- Orders //TODO: Güncel Order dönecek.
-        child: isThereActiveOrder == true ? TOrderMapPageMember() : Center(child: Text("There is no active order now.", style: Theme.of(context).textTheme.displayMedium,),)
+        child: isThereActiveOrder == false
+        ? Center(child: Text("There is no active order now.", style: Theme.of(context).textTheme.displayMedium,),)
+        : userType!=UserType.staff
+        ? TOrderMapPageMember() 
+        : Center(child: Text("There is no active order now.", style: Theme.of(context).textTheme.displayMedium,),)
       ),
     );
   }

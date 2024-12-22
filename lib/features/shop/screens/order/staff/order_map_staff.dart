@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:gaston/common/widgets/appbar/appbar.dart';
+import 'package:gaston/features/shop/controllers/product/order_controller.dart';
+import 'package:gaston/geocoding_repository.dart';
 import 'package:gaston/utils/constants/enums.dart';
 import 'package:gaston/utils/helpers/cloud_helper_functions.dart';
+import 'package:gaston/utils/helpers/scan_qr_code.dart';
 import 'package:get/get.dart';
 import 'package:gaston/data/repositories/order/order_repository.dart';
 import 'package:gaston/map_page.dart';
@@ -9,16 +13,21 @@ import 'package:gaston/rounded_container.dart';
 import 'package:gaston/utils/constants/colors.dart';
 import 'package:gaston/utils/constants/sizes.dart';
 import 'package:gaston/utils/helpers/helper_functions.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:location/location.dart';
 
 class TOrderMapPageStaff extends StatelessWidget {
   const TOrderMapPageStaff({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OrderRepository());
+    final orderController = Get.put(OrderController());
+    Location location = Location();
+    bool onChanged = true;
+
     return StreamBuilder(
-      stream: controller.fetchPendingOrderAsStream(), // Stream oluşturuldu.
+      stream: orderController.orderRepository.fetchProcessingOrderAsStream(), // Stream oluşturuldu.
       builder: (context, snapshot) {
         /// Nothing Found Widget
         final emptyWidget = CircularProgressIndicator();
@@ -30,6 +39,34 @@ class TOrderMapPageStaff extends StatelessWidget {
 
         /// Defining Order (It is not needed but if there are many orders, we call 0 index for it)
         final order = snapshot.data![0];
+
+        // Update the map when the location changes
+        // location.onLocationChanged.listen((locationData) async {
+        //   final newLocation = GeocodingRepository.geocodeToLocation(
+        //       LatLng(locationData.latitude!, locationData.latitude!));
+        //   order.staffGeocode = newLocation;
+
+        //   print("Konumumuz: ${order.staffGeocode}");
+
+        //   // Shipping Order
+        //   orderController.shippingOrder(order);
+        // });
+
+        // When the location is obtained, update the map center
+        if (order.status == OrderStatus.shipped && onChanged) {
+          location.getLocation().then((locationData) {
+          final newLocation = GeocodingRepository.geocodeToLocation(
+              LatLng(locationData.latitude!, locationData.longitude!));
+          order.staffGeocode = newLocation;
+          });
+
+          // Shipping Order (Delaying for stream)
+          Future.delayed(Duration(seconds: 10), () {
+            if (onChanged) orderController.updateStaffLocation(order);
+          });
+        }
+
+        print("Problem ne abi?");
 
         return Column(
           children: [
@@ -146,8 +183,35 @@ class TOrderMapPageStaff extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            // Confirm for shipping
+            if (order.status == OrderStatus.processing)
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // When the location is obtained, update the map center
+                          location.getLocation().then((locationData) {
+                            order.staffGeocode =
+                                GeocodingRepository.geocodeToLocation(LatLng(
+                                    locationData.latitude!,
+                                    locationData.longitude!));
+                          });
+                          
+                          // Shipping Order
+                          orderController.shippingOrder(order);
+                        },
+                        child: const Text('We are ready for shipping.'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
             /// Live Map
-            if (order.status == OrderStatus.shipped) Expanded(child: MapPage()),
+            if (order.status == OrderStatus.shipped) Expanded(child: MapPage(order: order,)),
 
             /// Button
             if (order.status == OrderStatus.shipped)
@@ -157,8 +221,27 @@ class TOrderMapPageStaff extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(TSizes.spaceBtwItems),
                       child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Checkout'),
+                        onPressed: () {
+                          onChanged = false;
+                          orderController.confirmOrder(order);
+                        },
+                        child: const Text('We came to destination.'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            
+            /// Scanning QR Code
+            if (order.status == OrderStatus.confirming)
+             Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+                      child: ElevatedButton(
+                        onPressed: () => Get.to(() => ScanQRCode(order: order, orderController: orderController,)),
+                        child: const Text('Scan QR Code'),
                       ),
                     ),
                   ),

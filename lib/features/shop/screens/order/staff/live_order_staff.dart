@@ -19,12 +19,12 @@ class OrderStaffScreen extends StatelessWidget {
     final userType = userController.user.value.userType;
     return Scaffold(
       /// -- AppBar
-      appBar: TAppBar(title: Text('Pending Orders', style: Theme.of(context).textTheme.headlineSmall)),
+      appBar: TAppBar(title: Text('Pending Orders', style: Theme.of(context).textTheme.headlineMedium), showBackArrow: false,),
       body: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
 
         /// -- Orders //TODO: Güncel Order dönecek.
-        child: isThereActiveOrder == true ? TOrderMapPageStaff() : Center(child: SingleChildScrollView(child: TOrderStaffListItems()))
+        child: isThereActiveOrder == true ? TOrderMapPageStaff() : SingleChildScrollView(child: TOrderStaffListItems())
       ),
     );
   }

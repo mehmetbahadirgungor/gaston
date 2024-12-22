@@ -14,6 +14,22 @@ class OrderRepository extends GetxController {
 
   /* ------------------  FUNCTIONS ------------------*/
   
+  Stream<List<OrderModel>> fetchProcessingOrderAsStream() {
+  try {
+    final userId = AuthenticationRepository.instance.authUser.uid;
+    if (userId.isEmpty) throw 'Unable to find user information. Try again in minutes.';
+
+    final result = _db.collectionGroup('Orders').where('isActive', isEqualTo: true).where('staffId', isEqualTo: userId).snapshots();
+
+    // Listening Stream from Firestore
+    return result.map((querySnapshot) =>
+            querySnapshot.docs.map((doc) => OrderModel.fromSnapshot(doc)).toList());
+  } catch (e) {
+    print("Hata: $e");
+    throw 'Something went wrong while fetching Order Information. Try again later';
+  }
+}
+    
   Stream<List<OrderModel>> fetchPendingOrderAsStream() {
   try {
     final userId = AuthenticationRepository.instance.authUser.uid;
@@ -32,7 +48,7 @@ class OrderRepository extends GetxController {
 }
   
   /// Get all order related to all Users
-  Future<List<OrderModel>> fetchPendingOrder() async {
+  Future<List<OrderModel>> fetchPendingOrders() async {
     try {
       final userId = AuthenticationRepository.instance.authUser.uid;
       if (userId.isEmpty) throw 'Unable to find user information. Try again in minutes.';
@@ -85,7 +101,17 @@ class OrderRepository extends GetxController {
     try {
       await _db.collection('Users').doc(userId).collection('Orders').add(order.toJson());
     } catch (e) {
-      throw 'Something went wrong while fetching Order Information. Try again later';
+      throw 'Something went wrong while saving Order Information. Try again later';
+    }
+  }
+
+  /// Update user order
+  Future<void> updateOrder(OrderModel order, String userId) async {
+    try {
+      final result = await _db.collection('Users').doc(userId).collection('Orders').where('id', isEqualTo: order.id).get();
+      await result.docs[0].reference.update(order.toJson());
+    } catch (e) {
+      throw 'Something went wrong while updating Order Information. Try again later';
     }
   }
 }

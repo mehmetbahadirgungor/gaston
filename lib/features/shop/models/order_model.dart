@@ -34,12 +34,14 @@ class OrderModel {
     required this.isActive,
   });
 
+  String get qrCode => '$id$userId$staffId';
+
   String get formattedOrderDate => THelperFunctions.getFormattedDate(orderDate);
 
   String get formattedDeliveryDate =>
       deliveryDate != null
           ? THelperFunctions.getFormattedDate(deliveryDate!)
-          : '';
+          : "Not delivered.";
 
   String get orderStatusText =>
       status == OrderStatus.delivered

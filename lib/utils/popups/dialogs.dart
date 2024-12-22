@@ -5,7 +5,7 @@ class TDialogs {
     required BuildContext context,
     String title = 'Removal Confirmation',
     String content = 'Removing this data will delete all related data. Are you sure?',
-    String cancelText = 'Cancel',
+    String cancelText = '',
     String confirmText = 'Remove',
     Function()? onCancel,
     Function()? onConfirm,
@@ -18,12 +18,12 @@ class TDialogs {
           title: Text(title),
           content: Text(content),
           actions: <Widget>[
-            TextButton(
+            if(cancelText != '') TextButton(
               onPressed: onCancel ?? () => Navigator.of(context).pop(),
               child: Text(cancelText),
             ),
             TextButton(
-              onPressed: onConfirm,
+              onPressed: onConfirm ?? () => Navigator.of(context).pop(),
               child: Text(confirmText),
             ),
           ],

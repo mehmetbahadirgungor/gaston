@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gaston/common/widgets/appbar/appbar.dart';
 import 'package:gaston/common/widgets/success_screen/success_screen.dart';
 import 'package:gaston/features/navigation_menu.dart';
+import 'package:gaston/features/shop/models/order_model.dart';
 import 'package:gaston/utils/constants/enums.dart';
 import 'package:gaston/utils/constants/image_strings.dart';
 import 'package:gaston/utils/helpers/cloud_helper_functions.dart';
@@ -162,11 +163,11 @@ class TOrderMapPageMember extends StatelessWidget {
             const SizedBox(height: 20),
 
             /// Live Map
-            if (order.status == OrderStatus.shipped) Expanded(child: MapPage()),
+            if (order.status == OrderStatus.shipped) Expanded(child: MapPage(order: order)),
 
             /// QR Code
             if (order.status == OrderStatus.confirming)
-              GenerateQRCode(data: '${order.id} ${order.userId}',)
+              GenerateQRCode(data: order.qrCode,)
               // TODO: Burdaki buton staff için
               // Row(
               //   children: [
