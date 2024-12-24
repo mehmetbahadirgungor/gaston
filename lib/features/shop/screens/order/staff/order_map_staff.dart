@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gaston/common/widgets/success_screen/success_screen.dart';
+import 'package:gaston/features/navigation_menu.dart';
+import 'package:gaston/utils/constants/image_strings.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:gaston/common/widgets/appbar/appbar.dart';
 import 'package:gaston/features/shop/controllers/product/order_controller.dart';
@@ -66,7 +69,15 @@ class TOrderMapPageStaff extends StatelessWidget {
           });
         }
 
-        print("Problem ne abi?");
+        // if (order.status == OrderStatus.delivered) {
+        //   /// Success Screen
+        //   Get.off(() => SuccessScreen(
+        //   image: TImages.orderCompletedAnimation,
+        //   title: 'Payment Success!',
+        //   subTitle: 'Your fuel was delivered!',
+        //   onPressed: () => Get.offAll(() => const NavigationMenu()),
+        //   ));
+        // }
 
         return Column(
           children: [
@@ -211,7 +222,7 @@ class TOrderMapPageStaff extends StatelessWidget {
               ),
 
             /// Live Map
-            if (order.status == OrderStatus.shipped) Expanded(child: MapPage(order: order,)),
+            if (order.status == OrderStatus.shipped && order.staffGeocode != null) Expanded(child: MapPage(order: order,)),
 
             /// Button
             if (order.status == OrderStatus.shipped)

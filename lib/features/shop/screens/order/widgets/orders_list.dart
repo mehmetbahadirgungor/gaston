@@ -73,12 +73,6 @@ class TOrderListItems extends StatelessWidget {
                               ],
                             ),
                           ),
-
-                          /// 3 - Icon
-                          IconButton(onPressed: () {
-                            // TODO: YÖNLENDİRME OLACAK
-                            print("SelamunAleyküm");
-                          }, icon: const Icon(Iconsax.arrow_right_34, size: TSizes.iconSm)),
                         ],
                       ),
                       const SizedBox(height: TSizes.spaceBtwItems),

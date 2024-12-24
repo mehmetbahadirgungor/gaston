@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gaston/common/widgets/appbar/appbar.dart';
 import 'package:gaston/common/widgets/success_screen/success_screen.dart';
 import 'package:gaston/features/navigation_menu.dart';
+import 'package:gaston/features/shop/controllers/product/order_controller.dart';
 import 'package:gaston/features/shop/models/order_model.dart';
 import 'package:gaston/utils/constants/enums.dart';
 import 'package:gaston/utils/constants/image_strings.dart';
@@ -21,9 +22,9 @@ class TOrderMapPageMember extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OrderRepository());
+    final orderController = Get.put(OrderController());
     return StreamBuilder(
-      stream: controller.fetchPendingOrderAsStream(), // Stream oluşturuldu.
+      stream: orderController.orderRepository.fetchPendingOrderAsStream(), // Stream oluşturuldu.
       builder: (context, snapshot) {
         /// Nothing Found Widget
         final emptyWidget = CircularProgressIndicator();
@@ -38,12 +39,7 @@ class TOrderMapPageMember extends StatelessWidget {
         
         if (order.status == OrderStatus.delivered) {
           /// Success Screen
-          Get.off(() => SuccessScreen(
-          image: TImages.orderCompletedAnimation,
-          title: 'Payment Success!',
-          subTitle: 'Your fuel was delivered!',
-          onPressed: () => Get.offAll(() => const NavigationMenu()),
-          ));
+          orderController.completeOrder(order);
         }
 
         return Column(

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gaston/features/shop/screens/order/widgets/orders_list_staff.dart';
+import 'package:gaston/features/shop/screens/order/widgets/orders_list.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../utils/constants/sizes.dart';

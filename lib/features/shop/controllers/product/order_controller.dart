@@ -209,6 +209,15 @@ class OrderController extends GetxController {
 
     // Update the order
       await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
+
+    // Show Success screen
+      Get.off(() =>
+          SuccessScreen(
+            image: TImages.orderCompletedAnimation,
+            title: 'Payment Success!',
+            subTitle: 'Your fuel was delivered successfully!',
+            onPressed: () => Get.offAll(() => const NavigationMenu()),
+          ));
   } 
 }
 

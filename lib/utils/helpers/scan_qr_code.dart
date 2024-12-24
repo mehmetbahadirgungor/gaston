@@ -47,8 +47,9 @@ class _ScanQRCodeState extends State<ScanQRCode> {
           bool isCorrectQRCode = qrCode == widget.order.qrCode;
 
           if (isCorrectQRCode) {
+            controller.stop();
             widget.orderController.completeOrder(widget.order);
-            Get.back();
+            // Get.back();
           } else {
             // If the QR code is invalid, show a dialog
             TDialogs.defaultDialog(
