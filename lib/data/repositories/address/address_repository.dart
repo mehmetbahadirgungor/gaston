@@ -44,4 +44,13 @@ class AddressRepository extends GetxController {
       throw 'Something went wrong wile saving Address Information. Try again later';
     }
   }
+
+  Future<void> updateAddress(AddressModel address) async {
+    try{
+      final userId = AuthenticationRepository.instance.authUser.uid;
+      await _db.collection('Users').doc(userId).collection('Addresses').doc(address.id).update(address.toJson());
+    } catch (e) {
+      throw 'Something went wrong wile saving Address Information. Try again later';
+    }
+  }
 }

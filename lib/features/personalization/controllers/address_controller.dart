@@ -115,7 +115,8 @@ class AddressController extends GetxController {
       address.fullAddress = address.toString();
 
       // Update Selected Address status
-      address.id = await addressRepository.addAddress(address);
+      address.id = await addressRepository.addAddress(address); // At the same time, we obtain id of the address
+      addressRepository.updateAddress(address);
       await selectAddress(address);
 
       // Remove Loader
