@@ -92,12 +92,6 @@ class SettingsScreen extends StatelessWidget {
                           Get.to(() => const CouponScreen())
                      ),
                   TSettingsMenuTile(
-                      icon: Iconsax.notification,
-                      title: 'Notification',
-                      subTitle: 'Set any kind of notification message',
-                      onTap: () =>
-                          Get.to(() => const NotificationScreen())),
-                  TSettingsMenuTile(
                       icon: Iconsax.security_card,
                       title: 'Account Privacy',
                       subTitle: 'Manage data usage and connected accounts',
@@ -122,18 +116,6 @@ class SettingsScreen extends StatelessWidget {
                     title: 'Geolocation',
                     subTitle: 'Get recommendation based on location',
                     trailing: Switch(value: true, onChanged: (value) {}),
-                  ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.security_user,
-                    title: 'Safe Mode',
-                    subTitle: 'Search result is safe for all ages',
-                    trailing: Switch(value: false, onChanged: (value) {}),
-                  ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.image,
-                    title: 'HD Image Quality',
-                    subTitle: 'Set Image quality to be seen',
-                    trailing: Switch(value: false, onChanged: (value) {}),
                   ),
 
                   /// -- Logout Button

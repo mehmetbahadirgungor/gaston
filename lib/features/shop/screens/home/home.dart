@@ -32,10 +32,6 @@ class HomeScreen extends StatelessWidget {
                   THomeAppBar(),
                   SizedBox(height: TSizes.spaceBtwSections),
 
-                  /// -- Budget
-                  TBudgetContainer(text: 'Current Badget: 0'),
-                  SizedBox(height: TSizes.spaceBtwSections),
-
                   /// -- Heading
                   Padding(
                     padding: EdgeInsets.only(left: TSizes.defaultSpace),

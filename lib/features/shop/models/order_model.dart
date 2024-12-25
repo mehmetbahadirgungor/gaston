@@ -67,7 +67,7 @@ class OrderModel {
       'items': items.map((item) => item.toJson()).toList(),
       'staffId' : staffId,
       'staffGeocode' : staffGeocode,
-      'isActive' : true,
+      'isActive' : isActive,
     };
   }
 

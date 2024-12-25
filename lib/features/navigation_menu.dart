@@ -68,7 +68,7 @@ class NavigationMenu extends StatelessWidget {
               const NavigationDestination(
                   icon: Icon(Iconsax.box), label: 'Order'),
             const NavigationDestination(
-                icon: Icon(Iconsax.heart), label: 'Wishlist'),
+                icon: Icon(Iconsax.heart), label: 'Favourite'),
             const NavigationDestination(
                 icon: Icon(Iconsax.user), label: 'Profile'),
           ],

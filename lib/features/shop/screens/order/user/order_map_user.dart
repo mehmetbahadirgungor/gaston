@@ -39,7 +39,13 @@ class TOrderMapPageMember extends StatelessWidget {
         
         if (order.status == OrderStatus.delivered) {
           /// Success Screen
-          orderController.completeOrder(order);
+          Get.off(() =>
+          SuccessScreen(
+            image: TImages.orderCompletedAnimation,
+            title: 'Payment Success!',
+            subTitle: 'Your fuel was delivered successfully!',
+            onPressed: () => Get.offAll(() => const NavigationMenu()),
+          ));
         }
 
         return Column(
@@ -159,7 +165,7 @@ class TOrderMapPageMember extends StatelessWidget {
             const SizedBox(height: 20),
 
             /// Live Map
-            if (order.status == OrderStatus.shipped) Expanded(child: MapPage(order: order)),
+            if (order.status == OrderStatus.shipped && order.staffGeocode != null) Expanded(child: MapPage(order: order)),
 
             /// QR Code
             if (order.status == OrderStatus.confirming)

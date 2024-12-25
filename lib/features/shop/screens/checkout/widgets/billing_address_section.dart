@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gaston/data/repositories/authentication/authentication_repository.dart';
 
 import '../../../../../common/widgets/texts/section_heading.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -23,13 +24,13 @@ class TBillingAddressSection extends StatelessWidget {
             ? Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Melih', style: Theme.of(context).textTheme.bodyLarge),
+            Text(addressController.selectedAddress.value.name, style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: TSizes.spaceBtwItems / 2),
             Row(
               children: [
                 const Icon(Icons.phone, color: Colors.grey, size: 16),
                 const SizedBox(height: TSizes.spaceBtwItems),
-                Text('+90-530-097-47-81', style: Theme.of(context).textTheme.bodyMedium),
+                Text(addressController.selectedAddress.value.phoneNumber, style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),
@@ -38,7 +39,7 @@ class TBillingAddressSection extends StatelessWidget {
                 const Icon(Icons.location_history, color: Colors.grey, size: 16),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Expanded(
-                    child: Text('Istanbul,Umraniye', style: Theme.of(context).textTheme.bodyMedium, softWrap: true)),
+                    child: Text(addressController.selectedAddress.value.toString(), style: Theme.of(context).textTheme.bodyMedium, softWrap: true)),
               ],
             ),
           ],

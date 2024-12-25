@@ -58,7 +58,7 @@ class AddressModel {
       'City': city,
       'State': state,
       'PostalCode': postalCode,
-      'County': country,
+      'Country': country,
       'DateTime': DateTime.now(),
       'SelectedAddress': selectedAddress,
     };
@@ -75,7 +75,7 @@ class AddressModel {
       city: data['City'] as String,
       state: data['State'] as String,
       postalCode: data['PostalCode'] as String,
-      country: data['County'] as String,
+      country: data['Country'] as String,
       selectedAddress: data['SelectedAddress'] as bool,
       dateTime: (data['DateTime'] as Timestamp).toDate(),
     );

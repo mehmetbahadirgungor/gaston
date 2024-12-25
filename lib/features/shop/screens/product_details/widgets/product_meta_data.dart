@@ -124,8 +124,8 @@ import '../../../models/product_model.dart';
           children: [
         TCircularImage(
           image: product.brand != null ? product.brand!.image : '',
-          width: 100,
-          height: 100,
+          width: 50,
+          height: 50,
           overlayColor: darkMode ? TColors.white : TColors.black,
         ),
             TBrandTitleWithVerifiedIcon(title: product.brand != null ? product.brand!.name : '', brandTextSize: TextSizes.medium),

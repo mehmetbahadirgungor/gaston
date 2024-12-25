@@ -23,7 +23,7 @@ class FavouriteScreen extends StatelessWidget {
     return Scaffold(
       appBar: TAppBar(
         title:
-        Text('Wishlist', style: Theme.of(context).textTheme.headlineMedium),
+        Text('Favourite', style: Theme.of(context).textTheme.headlineMedium),
         actions: [
           TCircularIcon(
               icon: Iconsax.add, onPressed: () => Get.to(const HomeScreen())),
@@ -45,7 +45,7 @@ class FavouriteScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       /// Nothing Found Widget
                       final emptyWidget = TAnimationLoaderWidget(
-                        text: 'Whoops! Wishlist is Empty... ',
+                        text: "You don't have a favourite product yet.",
                         animation: TImages.pencilAnimation,
                         showAction: true,
                         actionText: 'Let\'s add some',
