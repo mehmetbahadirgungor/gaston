@@ -54,13 +54,10 @@ class AddressController extends GetxController {
       );
 
       // Clear the "selected" field
-      if (selectedAddress.value.id.isEmpty) {
-        await addressRepository.updateSelectedField(
+      await addressRepository.updateSelectedField(
             selectedAddress.value.id, false);
-      }
 
       // Assign selected address
-      newSelectedAddress.selectedAddress;
       selectedAddress.value = newSelectedAddress;
 
       // Set the "selected" field to true for the  newly selected address
@@ -95,7 +92,7 @@ class AddressController extends GetxController {
 
       // Save Address Data
       AddressModel address = AddressModel(
-        id: '',
+        id: UniqueKey().toString(),
         fullAddress: '',
         geocode: {},
         name: name.text.trim(),
@@ -115,8 +112,7 @@ class AddressController extends GetxController {
       address.fullAddress = address.toString();
 
       // Update Selected Address status
-      address.id = await addressRepository.addAddress(address); // At the same time, we obtain id of the address
-      addressRepository.updateAddress(address);
+      await addressRepository.addAddress(address); // At the same time, we obtain id of the address
       await selectAddress(address);
 
       // Remove Loader

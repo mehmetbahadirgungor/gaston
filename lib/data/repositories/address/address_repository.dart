@@ -28,9 +28,11 @@ class AddressRepository extends GetxController {
   Future<void> updateSelectedField(String addressId, bool selected) async {
     try{
       final userId = AuthenticationRepository.instance.authUser.uid;
-      await _db.collection('Users').doc(userId).collection('Addresses').doc(addressId).update({'SelectedAddress': selected});
+      final result = await _db.collectionGroup('Adresses').where('id', isEqualTo: addressId).get();
+      await result.docs[0].reference.update({'SelectedAddress': selected});
+      // await _db.collection('Users').doc(userId).collection('Addresses').doc(addressId).update({'SelectedAddress': selected});
     } catch (e) {
-      throw 'Unable to update your address selection. Try again later';
+      // TODO: throw 'Unable to update your address selection. Try again later';
     }
   }
 

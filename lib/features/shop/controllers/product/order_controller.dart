@@ -200,7 +200,7 @@ class OrderController extends GetxController {
         deliveryDate: DateTime.now(),
         items: order.items,
         staffId: order.staffId,
-        isActive: false,
+        isActive: order.isActive,
       );
 
     // Update the user and staff station //TODO: user_repository'e encapsulation yap, buraya ekle.
@@ -216,7 +216,10 @@ class OrderController extends GetxController {
             image: TImages.orderCompletedAnimation,
             title: 'Payment Success!',
             subTitle: 'Your fuel was delivered successfully!',
-            onPressed: () => Get.offAll(() => const NavigationMenu()),
+            onPressed: () => Get.offAll(() async {
+              updatedOrder.isActive = false;
+              await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
+              return const NavigationMenu();}),
           ));
   } 
 }
