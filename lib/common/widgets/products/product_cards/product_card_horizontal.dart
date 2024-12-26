@@ -45,7 +45,7 @@ class TProductCardHorizontal extends StatelessWidget {
                 SizedBox(
                   height: 120,
                   width: 120,
-                  child: TRoundedImage(imageUrl: product.thumbnail,applyImageRadius: true, isNetworkImage: true),
+                  child: TRoundedImage(imageUrl: product.thumbnail,applyImageRadius: true, isNetworkImage: false),
                 ),
 
                 /// -- Sale Tag

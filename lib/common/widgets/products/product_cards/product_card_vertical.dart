@@ -139,7 +139,7 @@ import '../favourite_icon/favourite_icon.dart';
               child: Stack(
                 children: [
                   /// -- Thumbnail Image
-                  Center(child: TRoundedImage(imageUrl: product.thumbnail, applyImageRadius: true, isNetworkImage: true)),
+                  Center(child: TRoundedImage(imageUrl: product.thumbnail, applyImageRadius: true, isNetworkImage: false)),
 
                   /// -- Sale Tag
                   if (salePercentage != null)

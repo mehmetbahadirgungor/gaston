@@ -34,7 +34,7 @@ class TPromoSlider extends StatelessWidget {
                 items: controller.banners.map((banner) =>
                     TRoundedImage(
                       imageUrl: banner.imageUrl,
-                      isNetworkImage: true,
+                      isNetworkImage: false,
                       onPressed: () => Get.toNamed(banner.targetScreen),
                     )
                 )

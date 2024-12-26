@@ -32,6 +32,7 @@ class THomeCategories extends StatelessWidget {
           itemBuilder: (_, index) {
             final category = categoryController.featuredCategories[index];
             return TVerticalImageText(
+              isNetworkImage: false,
               image: category.image,
               title: category.name,
               onTap: () => Get.to(() => SubCategoriesScreen(category: category)),
