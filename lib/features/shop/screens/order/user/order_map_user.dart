@@ -38,14 +38,14 @@ class TOrderMapPageMember extends StatelessWidget {
         final order = snapshot.data![0];
         
         if (order.status == OrderStatus.delivered) {
-          /// Success Screen
-          Get.off(() =>
-          SuccessScreen(
-            image: TImages.orderCompletedAnimation,
-            title: 'Payment Success!',
-            subTitle: 'Your fuel was delivered successfully!',
-            onPressed: () => Get.offAll(() => const NavigationMenu()),
-          ));
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Get.off(() => SuccessScreen(
+                  image: TImages.orderCompletedAnimation,
+                  title: 'Payment Success!',
+                  subTitle: 'Your fuel was delivered successfully!',
+                  onPressed: () => Get.offAll(() => const NavigationMenu()),
+                ));
+          });
         }
 
         return Column(

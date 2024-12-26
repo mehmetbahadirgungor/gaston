@@ -42,7 +42,7 @@ class VerifyEmailController extends GetxController {
         Get.off(
               () =>
               SuccessScreen(
-                image: TImages.successfullyRegisterAnimation,
+                image: TImages.orderCompletedAnimation,
                 title: TTexts.yourAccountCreatedTitle,
                 subTitle: TTexts.yourAccountCreatedSubTitle,
                 onPressed: () =>
@@ -61,7 +61,7 @@ class VerifyEmailController extends GetxController {
       Get.off(
             () =>
             SuccessScreen(
-              image: TImages.successfullyRegisterAnimation,
+              image: TImages.orderCompletedAnimation,
               title: TTexts.yourAccountCreatedTitle,
               subTitle: TTexts.yourAccountCreatedSubTitle,
               onPressed: () =>

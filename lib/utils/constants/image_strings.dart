@@ -35,7 +35,8 @@ class TImages {
 
   static String defaultLoaderAnimation = "assets/images/animations/default-loader-animation.json";
   static String cartAnimation = "assets/images/animations/lady-adding-product-in-cart-animation.json";
-  static String orderCompletedAnimation = "assets/images/animations/order-complete-car-delivery-animation.json";
+  // static String orderCompletedAnimation = "assets/images/animations/order-complete-car-delivery-animation.json";
+  static String orderCompletedAnimation = "assets/images/animations/confirm.png";
   static String packageAnimation = "assets/images/animations/98783-packaging-in-progress.json";
   static String paperPlaneAnimation = "assets/images/animations/110052-paper-plane.json";
   static String carAnimation = "assets/images/animations/136491-animation-lottie-car-rides.json";
@@ -44,7 +45,7 @@ class TImages {
   static String searchAnimation = "assets/images/animations/72785-searching.json";
   static String emptyAnimation = "assets/images/animations/72785-searching.json";
   static String securityAnimation = "assets/images/animations/67263-security-icon-transparent.json";
-  static String successfullyRegisterAnimation = "assets/animations/sammy-line-success.png";
+  static String successfullyRegisterAnimation = "assets/images/animations/sammy-line-success.png";
   static String thankYouAnimation = "assets/images/animations/104368-thank-you.json";
   static String paymentSuccessfulAnimation = "assets/images/animations/120978-payment-successful.json";
   static String loadingJuggleAnimation = "assets/images/animations/141397-loading-juggle.json";

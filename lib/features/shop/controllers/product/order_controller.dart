@@ -209,7 +209,9 @@ class OrderController extends GetxController {
 
     // Update the order
       await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
-
+      await Future.delayed(Duration(seconds: 2));
+      updatedOrder.isActive = false;
+      await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
     // Show Success screen
       Get.off(() =>
           SuccessScreen(
