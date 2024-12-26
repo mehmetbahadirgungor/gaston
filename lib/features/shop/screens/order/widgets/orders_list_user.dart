@@ -27,7 +27,7 @@ class TOrderStaffListItems extends StatelessWidget {
           /// Nothing Found Widget
           final emptyWidget = TAnimationLoaderWidget(
             text: 'Whoops! No Orders yet.',
-            animation: TImages.orderCompletedAnimation,
+            animation: TImages.orderCompletedAnimation2,
           );
 
           /// Helper Function: Handle Loader, No Record or Error Message

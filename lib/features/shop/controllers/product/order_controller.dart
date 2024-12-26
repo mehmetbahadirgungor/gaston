@@ -218,10 +218,7 @@ class OrderController extends GetxController {
             image: TImages.orderCompletedAnimation,
             title: 'Payment Success!',
             subTitle: 'Your fuel was delivered successfully!',
-            onPressed: () => Get.offAll(() async {
-              updatedOrder.isActive = false;
-              await orderRepository.updateOrder(updatedOrder, updatedOrder.userId);
-              return const NavigationMenu();}),
+            onPressed: () => Get.offAll(() => const NavigationMenu()),
           ));
   } 
 }
