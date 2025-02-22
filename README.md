@@ -194,3 +194,10 @@ Boundary testing: Edge cases and boundary conditions were checked to ensure the 
 
 ### Test Conclusion
 We have tested our functions such as : log in, navigate to, confirm etc. and as a result all of them worked successfully.
+
+## Project Contributors
+- Mehmet Bahadır Güngör
+- Demir Haktan Ünlü
+- Melih Öztorun
+- Mehmet Enes Turan
+- Ayça Sarı
